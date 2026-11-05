@@ -13,19 +13,21 @@ V2.0 在 V1.0 的结构上做视觉重构：沿用「入口 → 电台 → 自�
 | 章节 | 内容 |
 | --- | --- |
 | 首屏 | 星螺座标志（编号线稿）、观测仪刻度环与访客本地时间、黄金螺线「星螺座」星图、版画羽翼 |
-| I · PORTA 入口 | 微信群二维码、KOOK 语音频道 |
+| I · PORTA 入口 | 微信群二维码、KOOK 语音频道、DOMUS 添加到主屏幕引导（iOS / 安卓分步说明，手机正视图线稿） |
 | II · VOX 电台 | Dawn FM |
 | III · FUTURA 即将到来 | 信号日志、ORIGO（三种视界可切换的体素浮岛）、ATRIUM 柱廊示意、ASTREA 3.0 平面图、ASTREA 自我介绍卡 |
 | IV · ARCHIVUM 档案 | Karis / Uranus / Lucia 档案预览 |
 | V · NUNTIUS 联系 | 管理员二维码、邮箱 |
 
 右上角按钮可切换「昼 / 夜」两套配色（对应 V2 / V1 海报），选择会记在浏览器里。
-页面所有装饰图形（刻度环、羽翼、拱门、浮岛、柱廊、平面图）均由 `index.html` 内的脚本用 SVG 实时绘制，没有额外图片。
+页面所有装饰图形（刻度环、羽翼、拱门、手机正视图、浮岛、柱廊、平面图）均由 `index.html` 内的脚本用 SVG 实时绘制，没有额外图片。
 
 ## 常见维护
 
 - **更换微信群二维码**：直接用同名文件覆盖根目录的 `群二维码.jpg`（微信群二维码每 7 天失效一次）。
 - **更换管理员二维码**：覆盖 `admin.jpg`。
+- **添加到主屏幕（DOMUS）**：图标名称与图标由 `manifest.webmanifest` 决定（主屏幕显示「星螺座」）。目前只是引导，没有 Service Worker、离线缓存或推送——页面上「信号推送」明确标为规划中，等 3.0 真正接入推送时再改文案。
+  页面会自动识别访客的系统（默认选中对应的 iOS / 安卓步骤）、微信与 QQ 内置浏览器（把「先在浏览器打开」的提示提到最前），以及从主屏幕打开的访客（显示「已驻留」）。
 - **修改文字**：编辑 `index.html`。如果加入了页面上原本没有的汉字，运行一次 `python tools/subset_font.py` 重新生成中文字体子集；不运行也能显示，只是新字会退回到系统字体。
 
 ## 文件
@@ -36,6 +38,8 @@ index.html                      页面（样式与脚本内联）
 assets/favicon.svg              站点图标
 assets/fonts/                   字体子集：Astrea Sans（阿里妈妈方圆体子集）、Bodoni Moda、IBM Plex Mono
 assets/img/                     Dawn FM 封面、角色立绘、主城封面（© StarryYino）、分享图
+assets/img/icon-*.png           主屏幕图标：192 / 512 与安卓自适应（maskable）版本，由 LOGO 矢量生成
+manifest.webmanifest            添加到主屏幕时的名称、图标与配色
 tools/subset_font.py            重新生成中文字体子集
 AlimamaFangYuanTiVF-Thin.ttf    中文字体原文件（子集的来源，网页不直接加载）
 ```
